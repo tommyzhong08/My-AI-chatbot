@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Student Calculator</title>
+  <style>
+    body{ background: #071427; color:#eaf8ff; font-family: 'Segoe UI', Tahoma, sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; padding:32px }
+    .card{ width:420px; max-width:96%; background: linear-gradient(180deg,#071827,#071422); border-radius:14px; padding:18px; box-shadow: 0 18px 48px rgba(0,0,0,0.6); border:1px solid rgba(78,167,255,0.06)}
+    h1{ margin:0 0 12px; font-size:20px; text-align:center }
+    .display{ background: linear-gradient(90deg,#04203355,#06405b22); padding:12px;border-radius:10px; font-size:28px; text-align:right; color:#dff9ff; min-height:48px; overflow:hidden }
+    .keys{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px }
+    button{ padding:12px; border-radius:10px; border:none; font-size:16px; cursor:pointer; color:#021418; background:linear-gradient(180deg,#aef0ff,#5fbfff); }
+    button.fn{ background:linear-gradient(180deg,#ffd7a8,#ffb36b); }
+    button.action{ background:linear-gradient(180deg,#8ef6c1,#3bd78d); color:#04221a; font-weight:700 }
+    .meta{ background:linear-gradient(180deg,#ffffff10,#ffffff06); color:#dff7ff }
+    .tools{ display:flex; gap:8px; margin-top:12px }
+    .link-back{ margin-left:auto; color:#bfeaff; text-decoration:none }
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <h1>College Student Calculator</h1>
+    <div id="display" class="display">0</div>
+    <div class="keys">
+      <button class="op" data-val="7">7</button>
+      <button class="op" data-val="8">8</button>
+      <button class="op" data-val="9">9</button>
+      <button class="fn" data-val="/">÷</button>
+
+      <button class="op" data-val="4">4</button>
+      <button class="op" data-val="5">5</button>
+      <button class="op" data-val="6">6</button>
+      <button class="fn" data-val="*">×</button>
+
+      <button class="op" data-val="1">1</button>
+      <button class="op" data-val="2">2</button>
+      <button class="op" data-val="3">3</button>
+      <button class="fn" data-val="-">−</button>
+
+      <button class="op" data-val="0">0</button>
+      <button class="op" data-val=".">.</button>
+      <button id="equals" class="action">=</button>
+      <button class="fn" data-val="+">+</button>
+    </div>
+    <div class="tools">
+      <button id="clear" class="meta">C</button>
+      <button id="back" class="meta">⌫</button>
+      <a class="link-back" href="collegecounselor.html">← Back</a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const disp = document.getElementById('display'); let expr='';
+      function render(){ disp.textContent = expr || '0' }
+      function append(v){ if(v==='.'&&/\.[0-9]*$/.test(expr)) return; expr+=v; render() }
+      function clearAll(){ expr=''; render() }
+      function back(){ expr=expr.slice(0,-1); render() }
+      function safeEval(s){ try{ const safe=s.replace(/[^0-9+\-*/(). ]/g,''); return Function('return ('+safe+')')(); }catch(e){return 'Error'} }
+      document.querySelectorAll('.op').forEach(b=>b.addEventListener('click',()=>append(b.dataset.val)));
+      document.querySelectorAll('.fn').forEach(b=>b.addEventListener('click',()=>append(b.dataset.val)));
+      document.getElementById('clear').addEventListener('click',clearAll);
+      document.getElementById('back').addEventListener('click',back);
+      document.getElementById('equals').addEventListener('click',()=>{ const r=safeEval(expr); expr=(typeof r==='number'&&isFinite(r))?String(r):''; disp.textContent=(expr==='')?r:expr; });
+      window.addEventListener('keydown',e=>{ if(e.key.match(/[0-9.+\-*/()]/)){ append(e.key); e.preventDefault() } else if(e.key==='Enter'){ document.getElementById('equals').click(); e.preventDefault() } else if(e.key==='Backspace'){ back(); } else if(e.key==='Escape'){ clearAll(); } });
+      render();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Conversation</title>
+    <style> 
+        body {
+            min-height: 100vh;
+            margin: 0;
+            padding: 28px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #edf5ff;
+            background-color: #06111f;
+            background-image:
+                radial-gradient(circle at top left, rgba(94, 192, 255, 0.18), transparent 16%),
+                radial-gradient(circle at bottom right, rgba(117, 255, 175, 0.12), transparent 18%),
+                linear-gradient(140deg, #081522 0%, #0a1830 45%, #091220 100%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cdefs%3E%3ClinearGradient id='c' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%2394d9ff' stop-opacity='0.28'/%3E%3Cstop offset='1' stop-color='%232d5a86' stop-opacity='0.07'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' stroke='%23a9d9ff' stroke-width='3' opacity='0.2'%3E%3Ccircle cx='160' cy='140' r='42'/%3E%3Ccircle cx='160' cy='140' r='16'/%3E%3Cpath d='M166 102 L186 102 M134 102 L114 102 M160 104 L160 84 M160 176 L160 196'/%3E%3Ccircle cx='580' cy='150' r='30'/%3E%3Ccircle cx='580' cy='150' r='12'/%3E%3Cpath d='M600 150 L620 150 M560 150 L540 150 M580 170 L580 190 M580 130 L580 110'/%3E%3Cpath d='M220 520 L315 520 L315 490 L345 490 M345 490 L395 440'/%3E%3Cpath d='M450 580 L620 580 M510 530 L620 530 M530 560 L620 560'/%3E%3Cpath d='M340 240 L460 240 M340 270 L460 270 M380 300 L380 340 M420 300 L420 340'/%3E%3Cpath d='M150 520 L190 520 L190 560 M150 540 L190 540'/%3E%3C/g%3E%3C/svg%3E");
+            background-attachment: fixed;
+            background-size: cover;
+            background-blend-mode: screen, screen, normal, normal;
+            overflow-x: hidden;
+        }
+        h1, h3 {
+            text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
+            margin: 0;
+        }
+        h1 {
+            font-size: clamp(2.2rem, 3vw, 3rem);
+            margin-bottom: 18px;
+            margin: 0;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+        .header-container h1 {
+            flex: 1;
+            margin: 0;
+        }
+        .header-container button {
+            padding: 12px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #6ce4ff, #3a9cff);
+            color: #07101f;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+            transition: transform 180ms ease, box-shadow 180ms ease;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+        .header-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 28px rgba(0, 0, 0, 0.3);
+        }
+        p {
+            line-height: 1.65;
+            max-width: 100%;
+        }
+        button {
+            padding: 12px 18px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, #6ce4ff, #3a9cff);
+            color: #07101f;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
+            transition: transform 180ms ease, box-shadow 180ms ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 28px rgba(0, 0, 0, 0.3);
+        }
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+            margin-bottom: 18px;
+        }
+        .voice-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .extra-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            max-width: 720px;
+        }
+        .extra-info-section label {
+            font-weight: 700;
+            color: #e8f6ff;
+            font-size: 15px;
+        }
+        .extra-info-section textarea {
+            width: 100%;
+            min-height: 90px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(138, 211, 255, 0.35);
+            background: rgba(10, 18, 34, 0.92);
+            color: #edf5ff;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+            resize: vertical;
+        }
+        .voice-row label {
+            font-weight: 700;
+            color: #e8f6ff;
+            font-size: 15px;
+        }
+        .voice-row select {
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(138, 211, 255, 0.35);
+            background: rgba(10, 18, 34, 0.92);
+            color: #edf5ff;
+            min-width: 260px;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+        }
+        .extra-info-status {
+            font-size: 14px;
+            color: #b8f0ff;
+            min-height: 20px;
+            margin-top: 4px;
+        }
+        .slider-row {
+            display: block;
+            margin-top: 22px;
+            padding: 20px;
+            background: rgba(6, 14, 30, 0.86);
+            border: 1px solid rgba(138, 211, 255, 0.25);
+            border-radius: 14px;
+            width: fit-content;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+        }
+        .slider-row label,
+        .slider-row span {
+            font-weight: 700;
+            font-size: 15px;
+            color: #e8f6ff;
+        }
+        .slider-row input {
+            width: 220px;
+            height: 10px;
+            cursor: pointer;
+            margin: 0 12px;
+            accent-color: #6be1ff;
+            vertical-align: middle;
+        }
+    </style> 
+</head> 
+<body> 
+    <div class="header-container">
+        <h1>The Conversation</h1>
+        <button onclick="history.back()">BACK</button>
+    </div> 
+    <h3>You asked: </h3> 
+    <p>QUESTION_HERE</p> 
+    <h3>My response</h3> 
+    <p id="aiResponse">ANSWER_HERE</p> 
+    <!-- VOICE_ANSWERS -->
+    <div class="extra-info-section">
+        <label for="extraInfo">Add more info about this topic:</label>
+        <textarea id="extraInfo" placeholder="Type extra details here to refine the answer"></textarea>
+        <button id="extraInfoButton" type="button" onclick="refineAnswers()">Update answer with extra info</button>
+        <span id="extraInfoStatus" class="extra-info-status" aria-live="polite"></span>
+    </div>
+    <div class="voice-row">
+        <label for="voiceSelect">Choose voice:</label>
+        <select id="voiceSelect"></select>
+    </div>
+
+    <!-- Row 1: Action Buttons -->
+    <div class="button-row">
+        <button onclick="startSpeaking()">Speak Response</button>
+        <button onclick="pauseSpeaking()">Pause</button>
+        <button onclick="resumeSpeaking()">Resume</button>
+    </div>
+
+    <!-- Row 2: Separated Slider Box -->
+    <div class="slider-row">
+        <label for="speedSlider">Voice Speed Slider:</label>
+        <input type="range" id="speedSlider" min="0.5" max="3.0" step="0.1" value="1.0" oninput="updateSpeedLabel(this.value)">
+        <span id="speedValue">1.0x</span>
+    </div>
+
+    <script>
+        let currentUtterance = null;
+        let wordsArray = [];
+        let currentWordIndex = 0;
+
+        const voiceProfiles = [
+            {
+                label: 'Joseph John Junior III',
+                displayName: 'Joseph John Junior III',
+                personality: 'friendly counselor',
+                prefix: 'As your college counselor, ',
+                transform: text => text
+                    .replace(/\bshall\b/gi, 'would be a good idea to')
+                    .replace(/\bshould\b/gi, 'would likely consider')
+                    .replace(/\bcan\b/gi, 'can confidently')
+            },
+            {
+                label: 'Symphorian',
+                displayName: 'Symphorian',
+                personality: 'straightforward but complex',
+                prefix: 'When considering this matter, ',
+                transform: text => text
+                    .replace(/\bgood\b/gi, 'beneficial')
+                    .replace(/\bhelp\b/gi, 'facilitate')
+                    .replace(/\btry\b/gi, 'endeavor to')
+                    .replace(/\bimportant\b/gi, 'significant')
+                    .replace(/\bI think\b/gi, 'My assessment indicates')
+            },
+            {
+                label: 'Andromeda',
+                displayName: 'Andromeda',
+                personality: 'simple and direct',
+                prefix: 'Here\'s the simple answer: ',
+                transform: text => text
+                    .replace(/\boptimal\b/gi, 'best')
+                    .replace(/\bfacilitate\b/gi, 'help')
+                    .replace(/\bsignificant\b/gi, 'important')
+                    .replace(/\bThe data suggests\b/gi, 'I think')
+                    .replace(/\bIt is optimal to\b/gi, 'I recommend')
+            }
+        ];
+
+        function getSelectedVoice() {
+            const select = document.getElementById('voiceSelect');
+            const voices = window.speechSynthesis.getVoices();
+            const selectedIndex = parseInt(select?.value || '0', 10);
+            const uniqueVoices = voices.filter((voice, index, self) => self.findIndex(v => v.name === voice.name) === index);
+            return uniqueVoices[selectedIndex] || uniqueVoices[0] || null;
+        }
+
+        function getSelectedVoiceProfile() {
+            const select = document.getElementById('voiceSelect');
+            const selectedIndex = parseInt(select?.value || '0', 10);
+            return voiceProfiles[selectedIndex] || voiceProfiles[0];
+        }
+
+        function populateVoiceOptions() {
+            const select = document.getElementById('voiceSelect');
+            const voices = window.speechSynthesis.getVoices();
+            if (!select || voices.length === 0) return;
+            select.innerHTML = '';
+
+            for (let i = 0; i < voiceProfiles.length; i++) {
+                const option = document.createElement('option');
+                option.value = String(i);
+                option.textContent = voiceProfiles[i].label;
+                select.appendChild(option);
+            }
+
+            if (select.options.length > 0) {
+                select.selectedIndex = 0;
+            }
+        }
+
+        function updateResponseForSelectedVoice() {
+            const select = document.getElementById('voiceSelect');
+            const selectedIndex = parseInt(select?.value || '0', 10);
+            const responseElement = document.getElementById('aiResponse');
+            
+            if (typeof voiceAnswers !== 'undefined') {
+                const voiceKeys = ['joseph', 'symphorian', 'andromeda'];
+                const selectedKey = voiceKeys[selectedIndex];
+                if (voiceAnswers[selectedKey]) {
+                    responseElement.innerText = voiceAnswers[selectedKey];
+                    responseElement.dataset.original = voiceAnswers[selectedKey];
+                }
+            }
+        }
+
+        function refineAnswers() {
+            const questionElement = document.querySelector('h3 + p');
+            const question = questionElement?.innerText.trim() || '';
+            const extraInfoTextarea = document.getElementById('extraInfo');
+            const extraInfoButton = document.getElementById('extraInfoButton');
+            const extraInfoStatus = document.getElementById('extraInfoStatus');
+            const extraInfo = extraInfoTextarea?.value.trim() || '';
+            if (!question) return;
+
+            if (extraInfoButton) {
+                extraInfoButton.disabled = true;
+                extraInfoButton.textContent = 'Updating...';
+            }
+            if (extraInfoTextarea) {
+                extraInfoTextarea.disabled = true;
+            }
+            if (extraInfoStatus) {
+                extraInfoStatus.textContent = 'Loading updated answer...';
+            }
+
+            const params = new URLSearchParams({ question, extra_info: extraInfo });
+            fetch(`/refine?${params.toString()}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error(data.error);
+                        if (extraInfoStatus) {
+                            extraInfoStatus.textContent = 'Failed to update answer. Try again.';
+                        }
+                        return;
+                    }
+                    if (typeof voiceAnswers !== 'undefined') {
+                        voiceAnswers.joseph = data.joseph;
+                        voiceAnswers.symphorian = data.symphorian;
+                        voiceAnswers.andromeda = data.andromeda;
+                    }
+                    updateResponseForSelectedVoice();
+                    if (extraInfoStatus) {
+                        extraInfoStatus.textContent = 'Answer updated.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Refine request failed:', error);
+                    if (extraInfoStatus) {
+                        extraInfoStatus.textContent = 'Failed to update answer. Try again.';
+                    }
+                })
+                .finally(() => {
+                    if (extraInfoButton) {
+                        extraInfoButton.disabled = false;
+                        extraInfoButton.textContent = 'Update answer with extra info';
+                    }
+                    if (extraInfoTextarea) {
+                        extraInfoTextarea.disabled = false;
+                    }
+                });
+        }
+
+        function transformResponse(text) {
+            const profile = getSelectedVoiceProfile();
+            let result = text.trim();
+            if (!result) return result;
+            if (/^(yes|no)\b/i.test(result)) {
+                result = result.charAt(0).toUpperCase() + result.slice(1);
+            }
+            if (profile.transform) {
+                result = profile.transform(result);
+            }
+            if (!result.startsWith(profile.prefix)) {
+                result = profile.prefix + result.charAt(0).toLowerCase() + result.slice(1);
+            }
+            return result;
+        }
+
+        function normalizeResponseForNameQuery(text) {
+            const lower = text.trim().toLowerCase();
+            if (/(what('s| is) your name|who are you|tell me your name|your name)/.test(lower)) {
+                return getSelectedVoiceProfile().displayName;
+            }
+            return text;
+        }
+
+        function startSpeaking() {
+            window.speechSynthesis.cancel();
+            const responseElement = document.getElementById('aiResponse');
+            const responseText = responseElement.innerText;
+            
+            wordsArray = responseText.split(' ');
+            currentWordIndex = 0;
+            speakFromCurrentIndex();
+        }
+
+        function speakFromCurrentIndex() {
+            if (currentWordIndex >= wordsArray.length) return;
+
+            const remainingText = wordsArray.slice(currentWordIndex).join(' ');
+            currentUtterance = new SpeechSynthesisUtterance(remainingText);
+            currentUtterance.voice = getSelectedVoice();
+            currentUtterance.rate = parseFloat(document.getElementById('speedSlider').value || '1.0');
+            currentUtterance.onboundary = function(event) {
+                if (event.name === 'word') {
+                    const textSegment = remainingText.slice(0, event.charIndex);
+                    const wordsSpokenInSegment = textSegment.trim() ? textSegment.trim().split(/\s+/).length : 0;
+                    currentWordIndex += wordsSpokenInSegment;
+                }
+            };
+            window.speechSynthesis.speak(currentUtterance);
+        }
+
+        function pauseSpeaking() {
+            window.speechSynthesis.pause();
+        }
+
+        function resumeSpeaking() {
+            if (window.speechSynthesis.paused) {
+                window.speechSynthesis.resume();
+            } else {
+                speakFromCurrentIndex();
+            }
+        }
+
+        function updateSpeedLabel(val) {
+            document.getElementById('speedValue').innerText = val + 'x';
+            if (window.speechSynthesis.speaking) {
+                pauseSpeaking();
+                resumeSpeaking();
+            }
+        }
+
+        window.speechSynthesis.onvoiceschanged = populateVoiceOptions;
+        document.addEventListener('DOMContentLoaded', function() {
+            populateVoiceOptions();
+            updateResponseForSelectedVoice();
+            const voiceSelect = document.getElementById('voiceSelect');
+            if (voiceSelect) {
+                voiceSelect.addEventListener('change', updateResponseForSelectedVoice);
+            }
+        });
+    </script>
+</body> 
+</html>

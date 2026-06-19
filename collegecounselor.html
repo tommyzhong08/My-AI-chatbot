@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: #eef5ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0a1221;
+      background-image:
+        radial-gradient(circle at top left, rgba(120, 210, 255, 0.16), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(80, 220, 170, 0.12), transparent 20%),
+        linear-gradient(135deg, #0f1b32 0%, #08101f 55%, #0b1220 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%23a0d6ff' stroke-width='4' opacity='0.22'%3E%3Ccircle cx='120' cy='120' r='38'/%3E%3Ccircle cx='120' cy='120' r='16'/%3E%3Cpath d='M154 120 L178 120 M86 120 L60 120 M120 154 L120 178 M120 86 L120 60'/%3E%3Ccircle cx='480' cy='160' r='30'/%3E%3Ccircle cx='480' cy='160' r='12'/%3E%3Cpath d='M500 160 L520 160 M460 160 L440 160 M480 180 L480 200 M480 140 L480 120'/%3E%3Cpath d='M212 412 L320 412 L320 380 L340 380 M340 380 L380 340'/%3E%3Cg stroke='%2393c6ff' stroke-width='2'%3E%3Cpath d='M420 500 L520 500 M470 430 L540 430 M440 470 L540 470'/%3E%3Cpath d='M250 180 L380 180 M250 210 L380 210'/%3E%3Cpath d='M260 240 L290 240 L290 270 M310 240 L340 240 L340 270'/%3E%3Cpath d='M180 340 L220 340 L220 380 M180 360 L220 360'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      background-size: cover;
+      background-attachment: fixed;
+      background-blend-mode: screen, screen, normal, normal;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+    h2, h3 {
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+    }
+    h1 {
+      font-size: 3.5rem;
+      margin: 0 0 20px 0;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+    }
+    form {
+      margin: 22px 0 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    input[name='question'] {
+      width: 420px;
+      max-width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border: 2px solid rgba(160, 225, 255, 0.45);
+      border-radius: 10px;
+      font-size: 18px;
+      background: rgba(10, 20, 38, 0.9);
+      color: #eef5ff;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.04);
+    }
+    button {
+      padding: 10px 26px;
+      border: none;
+      border-radius: 12px;
+      font-size: 26px;
+      color: #0b1625;
+      background: linear-gradient(135deg, #8fe1ff, #4ea7ff);
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+    .btn-calculator {
+      display: inline-block;
+      padding: 10px 18px;
+      margin-left: 8px;
+      border-radius: 12px;
+      font-size: 18px;
+      color: #eef5ff;
+      background: linear-gradient(180deg,#1b3a52,#0b2333);
+      border: 1px solid rgba(78,167,255,0.12);
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(10,20,30,0.6);
+    }
+    .btn-notes {
+      display: inline-block;
+      padding: 10px 18px;
+      margin-left: 8px;
+      border-radius: 12px;
+      font-size: 18px;
+      color: #0b1625;
+      background: linear-gradient(135deg,#f0f9e8,#b8f2c4);
+      border: 1px solid rgba(78,167,255,0.06);
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.24);
+    }
+    img {
+      max-width: 100%;
+      border-radius: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+    }
+    .page-logo {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      background: linear-gradient(180deg, rgba(8,14,26,0.72), rgba(12,22,42,0.6));
+      border-radius: 12px;
+      border: 1px solid rgba(80, 200, 255, 0.18);
+      box-shadow: 0 8px 30px rgba(78,167,255,0.06), 0 2px 6px rgba(0,0,0,0.4);
+      backdrop-filter: blur(6px) saturate(140%);
+      transition: transform 220ms ease;
+    }
+    .page-logo:hover { transform: translateY(-4px); }
+    .page-logo::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 13px;
+      background: linear-gradient(90deg, rgba(143,225,255,0.12), rgba(78,167,255,0.06));
+      filter: blur(6px);
+      opacity: 0.9;
+      z-index: -1;
+    }
+    .page-logo .logo-mark {
+      width: 42px;
+      height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #bff3ff 0%, #6bdcff 30%, #3aa0ff 100%);
+      box-shadow: 0 6px 18px rgba(74,170,255,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+      transform: rotate(-8deg);
+    }
+    .page-shell {
+      position: relative;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 72px 36px 48px;
+      box-sizing: border-box;
+      z-index: 1;
+    }
+    .page-shell::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 34px;
+      border: 1px solid rgba(78, 167, 255, 0.24);
+      box-shadow: 0 0 70px rgba(78, 167, 255, 0.16), inset 0 0 24px rgba(143, 225, 255, 0.08);
+      pointer-events: none;
+    }
+    .page-shell::after {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 28px;
+      border: 1px dashed rgba(143, 225, 255, 0.12);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+    .page-logo {
+      top: 24px;
+      right: 24px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      z-index: 3;
+    }
+    .page-logo::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -42px;
+      width: 42px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(143, 225, 255, 0.95), rgba(78, 167, 255, 0.14));
+      box-shadow: 0 0 14px rgba(78, 167, 255, 0.4);
+      transform: translateY(-50%);
+      border-radius: 2px;
+    }
+    .page-logo .logo-mark svg { width: 28px; height: 28px; display: block; }
+    @keyframes logoPulse {
+      0% { box-shadow: 0 6px 18px rgba(74,170,255,0.12); }
+      50% { box-shadow: 0 10px 26px rgba(74,170,255,0.22); }
+      100% { box-shadow: 0 6px 18px rgba(74,170,255,0.12); }
+    }
+    .page-logo .logo-mark { animation: logoPulse 3s ease-in-out infinite; }
+    
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="page-logo" aria-hidden="true">
+      <span class="logo-mark">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0" stop-color="#bff3ff" />
+              <stop offset="1" stop-color="#4ea7ff" />
+            </linearGradient>
+          </defs>
+          <circle cx="24" cy="24" r="20" fill="url(#g1)" stroke="#032131" stroke-width="1" />
+          <circle cx="24" cy="24" r="14" fill="rgba(5,18,26,0.88)" />
+          <text x="24" y="29" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="800" fill="#bff3ff">CC</text>
+          <g stroke="#082233" stroke-width="1.4" stroke-linecap="round" opacity="0.9">
+            <path d="M24 4 L24 10" />
+            <path d="M24 38 L24 44" />
+            <path d="M4 24 L10 24" />
+            <path d="M38 24 L44 24" />
+          </g>
+        </svg>
+      </span>
+    </div>
+    <h1>College Counselor</h1>
+    <h2>Ask me a question about your education, or have a conversation.</h2>
+    <form action="/ask">
+        <input name="question" placeholder="ask a question">
+        <button type="submit">Ask</button>
+      <a href="/math" class="btn-calculator" role="button">Student Calculator</a>
+      <a href="/notes" class="btn-calculator" role="button">Notes</a>
+    </form>
+    <h3>Meet your College Counselor</h3>
+    <img src="https://www.thedailyupside.com/wp-content/uploads/2025/02/cio_humanoid-robot_02-10-25_iStock-iLexx.png" width="400" alt="Robot portrait">
+  </div>
+</body>
+</html>
